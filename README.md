@@ -232,7 +232,7 @@ export default {
 
 ## 示例代码仓库
 
-[GitHub仓库]()
+[GitHub仓库](https://github.com/Gitsifu/mqtt-mitt)
 
 ## 注意事项
 
