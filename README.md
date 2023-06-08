@@ -1,4 +1,4 @@
-# MQTT.js与mitt结合使用解决message监听多次的问题
+# Vue结合MQTT.js使用最佳实践
 
 在物联网项目中，前端想要使用mqtt接收设备或是平台的消息，可以使用MQTT.js
 
@@ -23,7 +23,7 @@ client.on('message', function (topic, message) {
 })
 ```
 
-## 一、注意事项
+## 一、遇到问题
 
 1、mqtt客户端最好整个项目创建一个，如果一个页面创建一个，可能把服务器搞崩溃
 
@@ -34,7 +34,7 @@ client.on('message', function (topic, message) {
 
 4、`MQTT.js` 本身有断线重连的机制，但是我在实际场景使用时会出现断连了之后，不再重连的情况；所以还需要一个连接守护的程序
 
-## 二、实现
+## 二、解决问题
 
 要解决 第`1、2、3` 的问题，那么就需要在整个项目中mqtt创建客户端的代码只能执行一次，
 监听 `connect` 也只能执行一次。
@@ -152,7 +152,7 @@ Vue.prototype.$emitter = emitter
 Vue.prototype.$mqttClient = mqttClient
 ```
 
-## 在页面中具体使用
+## 三、在页面中具体使用
 
 在具体的页面中的 `mounted` 我们需要通过 `onMqttMessage()` 来监听具体的mqtt发送过来的消息，
 同时，在页面销毁之前我们需要取消 `mqtt` 订阅，以及移除mitt的监听：`unsubscribe()`
@@ -230,11 +230,11 @@ export default {
 }
 ```
 
-## 示例代码仓库
+## 四、示例代码仓库
 
 [GitHub仓库](https://github.com/Gitsifu/mqtt-mitt)
 
-## 注意事项
+## 五、注意事项
 
 如果项目使用的是webpack5进行开发打包的，在引入MQTT.js的同时需要在配置 `vue.config.js` 中加上 `node-polyfill-webpack-plugin` 插件
 
@@ -261,6 +261,8 @@ module.exports = defineConfig({
 > [mitt](https://github.com/developit/mitt)
 >
 > [vue项目中使用mqttjs，注意事项及兼容IE11的处理](https://blog.csdn.net/qinleo6/article/details/107006628/)
+
+<Vssue :title="$title" />
 
 
 
